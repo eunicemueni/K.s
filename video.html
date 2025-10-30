@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kairah Studio — Cinematic Showcase</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Display:wght@700&family=Poppins:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  body { font-family: 'Poppins', sans-serif; background-color: #0a0a0a; color: #f9f9f9; overflow-x:hidden; }
+  .fullscreen-video { position: relative; width:100%; height:100vh; overflow:hidden; }
+  .fullscreen-video video { width:100%; height:100%; object-fit:cover; }
+  .fade-in { animation: fadeIn 1.5s ease-out forwards; opacity:0; }
+  @keyframes fadeIn { from {opacity:0; transform:translateY(20px);} to {opacity:1; transform:translateY(0);} }
+  .glow { box-shadow:0 0 20px rgba(212,175,55,0.2); transition: all 0.5s ease-in-out; }
+  .glow:hover { box-shadow:0 0 30px rgba(16,185,129,0.5); transform: scale(1.02); }
+  .gradient-text { background: linear-gradient(to right,#10b981,#d4af37,#facc15); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+  #paymentModal { transition: opacity 0.3s ease; }
+</style>
+</head>
+<body class="relative">
+
+<!-- Header -->
+<header class="text-center py-10 z-10 relative">
+  <h1 class="text-5xl md:text-6xl font-cinzel gradient-text">Kairah Studio</h1>
+  <p class="text-gray-400 mt-2 text-lg">Divine Cinematics Powered by AI</p>
+</header>
+
+<!-- Fullscreen Cinematic Intro -->
+<section class="fullscreen-video fade-in">
+  <video autoplay muted loop playsinline>
+    <source src="bg-cinematic.mp4" type="video/mp4">
+  </video>
+  <div class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+    <div class="text-center text-white px-6">
+      <h2 class="text-4xl md:text-5xl font-cinzel mb-4">Experience the Surreal</h2>
+      <p class="text-gray-300 text-lg md:text-xl">From 6-second glimpses to full cinematic masterpieces, Kairah Studio turns your vision into reality.</p>
+    </div>
+  </div>
+</section>
+
+<!-- Interactive Video Grid Gallery -->
+<main class="relative z-20 p-8 md:p-16 fade-in">
+  <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+
+    <!-- Free Plan -->
+    <div class="glow rounded-2xl overflow-hidden bg-gray-900 bg-opacity-70 backdrop-blur-md">
+      <video controls class="w-full rounded-t-2xl">
+        <source src="sample-free.mp4" type="video/mp4">
+      </video>
+      <div class="p-4">
+        <h3 class="text-xl font-semibold text-teal-400">Free Plan — 6 Seconds</h3>
+        <p class="text-gray-400 mt-2 text-sm leading-relaxed">
+          A short but powerful cinematic glimpse. Designed to spark curiosity and inspire upgrades.
+        </p>
+        <button onclick="openPaymentModal('Free')" class="mt-4 bg-teal-400 text-black font-semibold px-4 py-2 rounded hover:bg-teal-500 transition">
+          Preview / Generate
+        </button>
+      </div>
+    </div>
+
+    <!-- Pro Plan -->
+    <div class="glow rounded-2xl overflow-hidden bg-gray-900 bg-opacity-70 backdrop-blur-md">
+      <video controls class="w-full rounded-t-2xl">
+        <source src="sample-pro.mp4" type="video/mp4">
+      </video>
+      <div class="p-4">
+        <h3 class="text-xl font-semibold text-yellow-400">Pro Plan — 10 Seconds</h3>
+        <p class="text-gray-400 mt-2 text-sm leading-relaxed">
+          Unlock extended scenes, richer detail, and cinematic transitions. Perfect for creative storytellers.
+        </p>
+        <button onclick="openPaymentModal('Pro')" class="mt-4 bg-yellow-400 text-black font-semibold px-4 py-2 rounded hover:bg-yellow-500 transition">
+          Preview / Generate
+        </button>
+      </div>
+    </div>
+
+    <!-- Diamond Plan -->
+    <div class="glow rounded-2xl overflow-hidden bg-gray-900 bg-opacity-70 backdrop-blur-md">
+      <video controls class="w-full rounded-t-2xl">
+        <source src="sample-diamond.mp4" type="video/mp4">
+      </video>
+      <div class="p-4">
+        <h3 class="text-xl font-semibold text-yellow-300">Diamond Plan — 1 Minute</h3>
+        <p class="text-gray-400 mt-2 text-sm leading-relaxed">
+          True cinematic artistry. Realistic lighting, camera angles, and storytelling transitions.
+        </p>
+        <button onclick="openPaymentModal('Diamond')" class="mt-4 bg-yellow-300 text-black font-semibold px-4 py-2 rounded hover:bg-yellow-400 transition">
+          Preview / Generate
+        </button>
+      </div>
+    </div>
+
+    <!-- Cinematic Plan -->
+    <div class="glow rounded-2xl overflow-hidden bg-gray-900 bg-opacity-70 backdrop-blur-md">
+      <video controls class="w-full rounded-t-2xl">
+        <source src="sample-cinematic.mp4" type="video/mp4">
+      </video>
+      <div class="p-4">
+        <h3 class="text-xl font-semibold text-teal-300">Cinematic Plan — 2–3 Minutes</h3>
+        <p class="text-gray-400 mt-2 text-sm leading-relaxed">
+          Ultra-realistic film sequences for filmmakers and visionaries. Each frame glows with divine quality.
+        </p>
+        <button onclick="openPaymentModal('Cinematic')" class="mt-4 bg-teal-300 text-black font-semibold px-4 py-2 rounded hover:bg-teal-400 transition">
+          Preview / Generate
+        </button>
+      </div>
+    </div>
+
+  </section>
+</main>
+
+<!-- Payment Modal -->
+<div id="paymentModal" class="fixed inset-0 bg-black bg-opacity-70 hidden items-center justify-center z-50">
+  <div class="bg-gray-900 rounded-2xl p-8 w-11/12 max-w-lg relative">
+    <h2 class="text-2xl font-cinzel text-teal-300 mb-6 text-center">Choose Payment Method</h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+
+      <!-- Stripe -->
+      <button onclick="payStripe()" class="flex items-center justify-center gap-2 bg-gradient-to-r from-blue-400 to-indigo-600 text-white px-4 py-2 rounded hover:from-blue-500 hover:to-indigo-700 transition">
+        <img src="/assets/stripe.png" class="w-6 h-6" alt="Stripe"> Stripe
+      </button>
+
+      <!-- PayPal -->
+      <button onclick="payPayPal()" class="flex items-center justify-center gap-2 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">
+        <img src="/assets/paypal.png" class="w-6 h-6" alt="PayPal"> PayPal
+      </button>
+
+      <!-- Paystack -->
+      <button onclick="payPaystack()" class="flex items-center justify-center gap-2 bg-purple-600 text-white px-4 py-2 rounded hover:bg-purple-700 transition">
+        <img src="/assets/paystack.png" class="w-6 h-6" alt="Paystack"> Paystack
+      </button>
+
+      <!-- M-Pesa -->
+      <button onclick="payMpesa()" class="flex items-center justify-center gap-2 bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition">
+        <img src="/assets/mpesa.png" class="w-6 h-6" alt="M-Pesa"> M-Pesa
+      </button>
+
+      <!-- Wise -->
+      <button onclick="payWise()" class="flex items-center justify-center gap-2 bg-gray-600 text-white px-4 py-2 rounded hover:bg-gray-700 transition">
+        <img src="/assets/wise.png" class="w-6 h-6" alt="Wise"> Wise
+      </button>
+
+    </div>
+    <button onclick="closePaymentModal()" class="absolute top-4 right-4 text-gray-400 hover:text-white text-3xl">&times;</button>
+  </div>
+</div>
+
+<!-- Footer -->
+<footer class="text-center py-10 text-gray-500 relative z-20">
+  <p>© 2025 Kairah Studio — Divine Cinematics by AI</p>
+</footer>
+
+<script>
+  function openPaymentModal(plan) {
+    document.getElementById('paymentModal').classList.remove('hidden');
+    window.selectedPlan = plan;
+  }
+  function closePaymentModal() {
+    document.getElementById('paymentModal').classList.add('hidden');
+  }
+  function payStripe() { fetch(`/api/stripe-checkout?plan=${window.selectedPlan}`).then(res=>res.json()).then(data=>window.location.href=data.checkout_url); }
+  function payPayPal() { fetch(`/api/paypal-create?plan=${window.selectedPlan}`).then(res=>res.json()).then(data=>window.location.href=data.approval_url); }
+  function payPaystack() { fetch(`/api/paystack-init?plan=${window.selectedPlan}`).then(res=>res.json()).then(data=>window.location.href=data.authorization_url); }
+  function payMpesa() { fetch(`/api/mpesa-stkpush?plan=${window.selectedPlan}`).then(res=>res.json()).then(data=>alert("M-Pesa STK Push sent! Check your phone.")); }
+  function payWise() { alert("Use the following account to transfer: Name: Kairah, Account: 12345678, Routing: 020123456"); }
+</script>
+
+</body>
+</html>
