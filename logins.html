@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kairah Studio — Sign Up / Login</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Firebase -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js"></script>
+</head>
+<body class="bg-gradient-to-b from-[#08060a] to-[#14101a] flex items-center justify-center min-h-screen font-sans">
+
+  <div class="w-full max-w-md bg-[#0b0a0f]/90 border border-gray-700 rounded-xl p-8 shadow-lg text-gray-100">
+    <h1 class="text-3xl font-bold text-yellow-400 mb-6 text-center">KAIRAH STUDIO</h1>
+
+    <!-- Email Sign Up/Login -->
+    <div class="space-y-4">
+      <input id="email" type="email" placeholder="Email" class="w-full p-3 rounded-md bg-[#0b0a0f] border border-gray-700 text-gray-100" />
+      
+      <div class="relative">
+        <input id="password" type="password" placeholder="Password" class="w-full p-3 rounded-md bg-[#0b0a0f] border border-gray-700 text-gray-100 pr-10" />
+        <button id="toggle-password" type="button" class="absolute top-1/2 right-3 -translate-y-1/2 text-gray-400 text-sm">Show</button>
+      </div>
+
+      <button id="email-signup" class="w-full py-3 bg-yellow-400 text-black font-semibold rounded-md hover:bg-yellow-500 transition">Sign Up / Login</button>
+    </div>
+
+    <div class="flex items-center my-6">
+      <hr class="flex-grow border-gray-600">
+      <span class="mx-3 text-gray-400 text-sm">OR</span>
+      <hr class="flex-grow border-gray-600">
+    </div>
+
+    <!-- Google Login -->
+    <button id="google-login" class="w-full py-3 flex items-center justify-center gap-2 bg-[#4285F4] rounded-md hover:bg-[#357ae8] transition">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg" class="h-5 w-5" alt="Google Logo">
+      Continue with Google
+    </button>
+
+    <p id="auth-status" class="text-sm text-center text-gray-400 mt-4"></p>
+  </div>
+
+  <script>
+    // ---------- CONFIG: Replace with your Firebase config ----------
+    const FIREBASE_CONFIG = {
+      apiKey: "REPLACE_ME",
+      authDomain: "REPLACE_ME.firebaseapp.com",
+      projectId: "REPLACE_ME",
+      appId: "REPLACE_ME"
+    };
+    firebase.initializeApp(FIREBASE_CONFIG);
+    const auth = firebase.auth();
+
+    // Toggle password visibility
+    const passwordInput = document.getElementById('password');
+    const toggleBtn = document.getElementById('toggle-password');
+    toggleBtn.addEventListener('click', () => {
+      if(passwordInput.type === 'password') {
+        passwordInput.type = 'text';
+        toggleBtn.textContent = 'Hide';
+      } else {
+        passwordInput.type = 'password';
+        toggleBtn.textContent = 'Show';
+      }
+    });
+
+    const emailInput = document.getElementById('email');
+    const emailSignupBtn = document.getElementById('email-signup');
+    const authStatus = document.getElementById('auth-status');
+
+    // Email sign-up / login
+    emailSignupBtn.addEventListener('click', async () => {
+      const email = emailInput.value.trim();
+      const password = passwordInput.value.trim();
+      if(!email || !password) { authStatus.textContent = "Email & password required."; return; }
+
+      try {
+        // Try sign in first
+        await auth.signInWithEmailAndPassword(email, password);
+        authStatus.textContent = "Logged in successfully!";
+        setTimeout(() => window.location.href = "dashboard.html", 1000);
+      } catch(err) {
+        if(err.code === 'auth/user-not-found') {
+          // If user not found, create account
+          try {
+            await auth.createUserWithEmailAndPassword(email, password);
+            authStatus.textContent = "Account created! Logging in...";
+            setTimeout(() => window.location.href = "dashboard.html", 1000);
+          } catch(e) {
+            authStatus.textContent = e.message;
+          }
+        } else {
+          authStatus.textContent = err.message;
+        }
+      }
+    });
+
+    // Google login
+    const googleLoginBtn = document.getElementById('google-login');
+    googleLoginBtn.addEventListener('click', async () => {
+      const provider = new firebase.auth.GoogleAuthProvider();
+      try {
+        await auth.signInWithPopup(provider);
+        authStatus.textContent = "Google login successful!";
+        setTimeout(() => window.location.href = "dashboard.html", 1000);
+      } catch(err) {
+        authStatus.textContent = err.message;
+      }
+    });
+
+    // Optional: redirect if already logged in
+    auth.onAuthStateChanged(user => {
+      if(user) window.location.href = "dashboard.html";
+    });
+  </script>
+
+</body>
+</html>
