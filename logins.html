@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Kairah Studio — Login</title>
+  <title>Kairah Studio — Sign Up</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- Firebase -->
   <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js"></script>
@@ -14,7 +14,7 @@
   <div class="w-full max-w-md bg-[#0b0a0f]/90 border border-gray-700 rounded-xl p-8 shadow-lg text-gray-100">
     <h1 class="text-3xl font-bold text-yellow-400 mb-6 text-center">KAIRAH STUDIO</h1>
 
-    <!-- Email Login -->
+    <!-- Email Sign-up -->
     <div class="space-y-4">
       <input id="email" type="email" placeholder="Email" class="w-full p-3 rounded-md bg-[#0b0a0f] border border-gray-700 text-gray-100" />
       
@@ -23,7 +23,7 @@
         <button id="toggle-password" type="button" class="absolute top-1/2 right-3 -translate-y-1/2 text-gray-400 text-sm">Show</button>
       </div>
 
-      <button id="email-login" class="w-full py-3 bg-yellow-400 text-black font-semibold rounded-md hover:bg-yellow-500 transition">Login</button>
+      <button id="signup-btn" class="w-full py-3 bg-yellow-400 text-black font-semibold rounded-md hover:bg-yellow-500 transition">Sign Up</button>
     </div>
 
     <div class="flex items-center my-6">
@@ -32,8 +32,8 @@
       <hr class="flex-grow border-gray-600">
     </div>
 
-    <!-- Google Login -->
-    <button id="google-login" class="w-full py-3 flex items-center justify-center gap-2 bg-[#4285F4] rounded-md hover:bg-[#357ae8] transition">
+    <!-- Google Sign-up -->
+    <button id="google-signup" class="w-full py-3 flex items-center justify-center gap-2 bg-[#4285F4] rounded-md hover:bg-[#357ae8] transition">
       <img src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg" class="h-5 w-5" alt="Google Logo">
       Continue with Google
     </button>
@@ -66,43 +66,31 @@
     });
 
     const emailInput = document.getElementById('email');
-    const emailLoginBtn = document.getElementById('email-login');
+    const signupBtn = document.getElementById('signup-btn');
     const authStatus = document.getElementById('auth-status');
 
-    // Email login (auto-create account if not exist)
-    emailLoginBtn.addEventListener('click', async () => {
+    // Email sign-up
+    signupBtn.addEventListener('click', async () => {
       const email = emailInput.value.trim();
       const password = passwordInput.value.trim();
       if(!email || !password) { authStatus.textContent = "Email & password required."; return; }
 
       try {
-        // Try sign in first
-        await auth.signInWithEmailAndPassword(email, password);
-        authStatus.textContent = "Logged in successfully!";
+        await auth.createUserWithEmailAndPassword(email, password);
+        authStatus.textContent = "Account created successfully!";
         setTimeout(() => window.location.href = "dashboard.html", 1000);
       } catch(err) {
-        if(err.code === 'auth/user-not-found') {
-          // Auto-create account
-          try {
-            await auth.createUserWithEmailAndPassword(email, password);
-            authStatus.textContent = "Account created! Logging in...";
-            setTimeout(() => window.location.href = "dashboard.html", 1000);
-          } catch(e) {
-            authStatus.textContent = e.message;
-          }
-        } else {
-          authStatus.textContent = err.message;
-        }
+        authStatus.textContent = err.message;
       }
     });
 
-    // Google login
-    const googleLoginBtn = document.getElementById('google-login');
-    googleLoginBtn.addEventListener('click', async () => {
+    // Google sign-up/login
+    const googleBtn = document.getElementById('google-signup');
+    googleBtn.addEventListener('click', async () => {
       const provider = new firebase.auth.GoogleAuthProvider();
       try {
         await auth.signInWithPopup(provider);
-        authStatus.textContent = "Google login successful!";
+        authStatus.textContent = "Google sign-up successful!";
         setTimeout(() => window.location.href = "dashboard.html", 1000);
       } catch(err) {
         authStatus.textContent = err.message;
