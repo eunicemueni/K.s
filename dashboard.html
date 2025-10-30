@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Kairah Studio Dashboard</title>
+
+  <!-- Fonts + Tailwind -->
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Display:wght@700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Firebase -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js"></script>
+
+  <style>
+    :root{ --k-gold:#D4AF37; --mid-plum:#3D2C41; }
+    body { margin:0; background: linear-gradient(180deg,#08060a,#14101a); color:#efecea; font-family: 'Poppins', sans-serif; }
+    .glass { background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); border:1px solid rgba(212,175,55,0.06); backdrop-filter: blur(10px); border-radius:12px; }
+    .brand { font-family: 'Cinzel Display', serif; color:var(--k-gold); }
+    .muted { color:#bfb9b6; }
+    .disabled { opacity:0.5; pointer-events:none; }
+  </style>
+</head>
+<body>
+
+  <!-- Top header -->
+  <header class="py-6 flex items-center justify-between max-w-6xl mx-auto px-6">
+    <div class="text-left">
+      <div class="brand text-4xl">KAIRAH STUDIO</div>
+      <div class="muted text-sm">Dashboard — Welcome to your creative control center</div>
+    </div>
+    <div class="flex items-center gap-3">
+      <div id="user-email" class="muted text-sm"></div>
+      <button id="signout" class="px-4 py-2 bg-gray-800 rounded-md text-sm">Sign out</button>
+    </div>
+  </header>
+
+  <main class="max-w-6xl mx-auto px-6 py-6 grid grid-cols-1 lg:grid-cols-3 gap-6">
+
+    <!-- Left column: Overview & Generate -->
+    <section class="lg:col-span-2 glass p-6">
+      <h2 class="text-2xl font-semibold text-yellow-300 mb-2">Overview</h2>
+      <p class="text-sm text-gray-200 mb-4" id="welcome-line">Welcome — loading...</p>
+
+      <!-- Generate Video tool -->
+      <div class="glass p-4 mb-4">
+        <h3 class="font-semibold mb-2">Generate Cinematic Video</h3>
+        <p class="text-xs muted mb-2">Enter your prompt and press Generate. Your plan limits determine allowed length and remaining quotas.</p>
+        <textarea id="prompt" rows="4" class="w-full p-3 rounded-md bg-[#0b0a0f] border border-gray-700 text-gray-100" placeholder="Describe your cinematic scene..."></textarea>
+
+        <div class="flex items-center gap-3 mt-3">
+          <button id="generate-btn" class="px-4 py-2 bg-yellow-400 text-black rounded-md font-semibold">Generate</button>
+          <button id="prompt-magic" class="px-4 py-2 glass rounded-md">Prompt Magic</button>
+          <div id="generate-status" class="text-sm muted"></div>
+        </div>
+
+        <div id="video-result" class="mt-4"></div>
+      </div>
+
+      <!-- Video Library -->
+      <div class="glass p-4">
+        <h3 class="font-semibold mb-2">Your Videos</h3>
+        <p class="text-sm muted mb-3">Previously generated videos appear here; downloads are restricted by plan and remaining credits.</p>
+        <div id="video-library" class="grid grid-cols-1 md:grid-cols-2 gap-3"></div>
+      </div>
+    </section>
+
+    <!-- Right column: Plan, Billing, Support -->
+    <aside class="glass p-6">
+      <div>
+        <h3 class="text-xl font-semibold text-yellow-300">Your Plan</h3>
+        <div id="plan-card" class="mt-3 p-3 border rounded-md">
+          <div id="plan-name" class="font-semibold">Loading...</div>
+          <div id="plan-details" class="text-sm muted mt-1"></div>
+          <div id="plan-credits" class="text-sm mt-2 muted"></div>
+        </div>
+
+        <div class="mt-4">
+          <h4 class="font-semibold">Upgrade / Payments</h4>
+          <p class="text-xs muted mb-2">Use any payment method. Payment flows call your backend endpoints (replace BACKEND_BASE_URL below).</p>
+          <div class="space-y-2">
+            <button id="open-pay-modal" class="w-full px-3 py-2 bg-[#D4AF37] text-black rounded-md">Buy / Upgrade (All methods)</button>
+          </div>
+        </div>
+
+        <div class="mt-4">
+          <h4 class="font-semibold">Support</h4>
+          <p class="text-xs muted">Email: <a href="mailto:keishapoa@gmail.com" class="underline">keishapoa@gmail.com</a></p>
+        </div>
+      </div>
+    </aside>
+
+  </main>
+
+  <!-- Payment modal (all methods) -->
+  <div id="pay-modal" class="fixed inset-0 z-50 hidden items-center justify-center">
+    <div class="absolute inset-0 bg-black/70"></div>
+    <div class="relative max-w-2xl w-full p-6 glass rounded-lg z-50">
+      <button id="pay-close" class="absolute top-4 right-4 text-gray-300">✕</button>
+      <h3 class="text-xl font-semibold text-yellow-300 mb-3">Pay / Upgrade — Choose a method</h3>
+
+      <div class="space-y-3">
+        <div class="flex justify-between items-center">
+          <div class="flex items-center gap-3">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/3/3f/Stripe_Logo%2C_revised_2016.svg" class="h-6" alt="Stripe">
+            <div>Stripe (cards)</div>
+          </div>
+          <button id="stripe-checkout" class="px-3 py-1 rounded bg-[#635BFF] text-white text-sm">Pay (Stripe)</button>
+        </div>
+
+        <div class="flex justify-between items-center">
+          <div class="flex items-center gap-3">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/b/b5/PayPal.svg" class="h-6" alt="PayPal">
+            <div>PayPal</div>
+          </div>
+          <button id="paypal-checkout" class="px-3 py-1 rounded bg-[#0070BA] text-white text-sm">Pay (PayPal)</button>
+        </div>
+
+        <div class="flex justify-between items-center">
+          <div class="flex items-center gap-3">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/1/12/Paystack_Logo.png" class="h-6" alt="Paystack">
+            <div>Paystack</div>
+          </div>
+          <button id="paystack-checkout" class="px-3 py-1 rounded bg-[#0A0A23] text-white text-sm">Pay (Paystack)</button>
+        </div>
+
+        <div class="flex justify-between items-center">
+          <div class="flex items-center gap-3">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/7/7c/M-PESA_LOGO.svg" class="h-6" alt="M-Pesa">
+            <div>M-Pesa (STK Push)</div>
+          </div>
+          <button id="mpesa-checkout" class="px-3 py-1 rounded bg-[#34B233] text-white text-sm">Pay (M-Pesa)</button>
+        </div>
+
+        <div class="flex justify-between items-center">
+          <div class="flex items-center gap-3">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/2/2e/Wise_2021.svg" class="h-6" alt="Wise">
+            <div>Wise (Bank Transfer)</div>
+          </div>
+          <button id="wise-copy" class="px-3 py-1 rounded bg-[#00B9FF] text-white text-sm">Copy Details</button>
+        </div>
+
+      </div>
+
+      <div id="payment-result" class="text-sm muted mt-3"></div>
+    </div>
+  </div>
+
+  <!-- Firebase & app logic -->
+  <script>
+    // ---------- CONFIG: Replace with your Firebase config ----------
+    const FIREBASE_CONFIG = {
+      apiKey: "REPLACE_ME",
+      authDomain: "REPLACE_ME.firebaseapp.com",
+      projectId: "REPLACE_ME",
+      appId: "REPLACE_ME"
+    };
+    // Backend base (replace with your Render backend URL)
+    const BACKEND_BASE_URL = ""; // e.g. "https://your-backend.onrender.com"
+    // -------------------------------------------------------------
+    firebase.initializeApp(FIREBASE_CONFIG);
+    const auth = firebase.auth();
+
+    // Plan definitions (kept exactly as you requested)
+    const PLANS = {
+      "Free": {"price_month": 0, "price_year": 0, "video_limit": 1, "duration": "6s"},
+      "Pro": {"price_month": 19, "price_year": 300, "video_limit": 10, "duration": "30s"},
+      "Diamond": {"price_month": 49, "price_year": 450, "video_limit": null, "duration": "1m"},
+      "Cinematic": {"price_month": 99, "price_year": 600, "video_limit": null, "duration": "2-3m"},
+      "Lifetime": {"price_one_time": 500, "video_limit": null, "duration": "unlimited"}
+    };
+
+    // In-memory user state (will be replaced by server state in production)
+    let currentUser = null;
+    // Simple local storage based usage tracking (must be synced to backend for real prod)
+    // Structure: kairah_usage_{email} = { plan: "Free", used: X, periodStart: "2025-..."}
+    function usageKey(email){ return `kairah_usage_${email}`; }
+
+    // DOM refs
+    const userEmailEl = document.getElementById('user-email');
+    const welcomeLine = document.getElementById('welcome-line');
+    const planNameEl = document.getElementById('plan-name');
+    const planDetailsEl = document.getElementById('plan-details');
+    const planCreditsEl = document.getElementById('plan-credits');
+
+    const promptInput = document.getElementById('prompt');
+    const generateBtn = document.getElementById('generate-btn');
+    const promptMagic = document.getElementById('prompt-magic');
+    const generateStatus = document.getElementById('generate-status');
+    const videoResult = document.getElementById('video-result');
+    const videoLibrary = document.getElementById('video-library');
+
+    const payModal = document.getElementById('pay-modal');
+    const payClose = document.getElementById('pay-close');
+    const openPayModal = document.getElementById('open-pay-modal');
+
+    // Payment buttons
+    const stripeCheckoutBtn = document.getElementById('stripe-checkout');
+    const paypalCheckoutBtn = document.getElementById('paypal-checkout');
+    const paystackCheckoutBtn = document.getElementById('paystack-checkout');
+    const mpesaCheckoutBtn = document.getElementById('mpesa-checkout');
+    const wiseCopyBtn = document.getElementById('wise-copy');
+    const paymentResult = document.getElementById('payment-result');
+
+    // Sign out
+    document.getElementById('signout').addEventListener('click', async () => {
+      await auth.signOut();
+      localStorage.removeItem('kairah_user_email');
+      window.location.href = 'index.html';
+    });
+
+    // Open pay modal
+    openPayModal.addEventListener('click', () => {
+      payModal.style.display = 'flex';
+      payModal.classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
+    });
+    payClose.addEventListener('click', () => {
+      payModal.style.display = 'none';
+      payModal.classList.add('hidden');
+      document.body.style.overflow = '';
+      paymentResult.textContent = '';
+    });
+
+    // Sticky check: require user to be signed-in. If not, redirect to index
+    auth.onAuthStateChanged(async (user) => {
+      if (!user) {
+        // No user -> go back to landing (enforces your rule: generation only for signed up users)
+        window.location.href = 'index.html';
+        return;
+      }
+      currentUser = user;
+      const email = user.email || user.providerData[0]?.email || '';
+      userEmailEl.textContent = email;
+      localStorage.setItem('kairah_user_email', email);
+
+      // Load or create usage object
+      let usage = JSON.parse(localStorage.getItem(usageKey(email)) || 'null');
+      if (!usage) {
+        // New user defaults to Free plan (unless backend says otherwise)
+        usage = { plan: 'Free', used: 0, periodStart: new Date().toISOString() };
+        localStorage.setItem(usageKey(email), JSON.stringify(usage));
+      }
+      renderDashboard(usage);
+    });
+
+    // Render dashboard based on usage info
+    function renderDashboard(usage) {
+      const email = localStorage.getItem('kairah_user_email') || '';
+      welcomeLine.textContent = `Welcome back, ${email}. Your creative studio awaits.`;
+      planNameEl.textContent = usage.plan;
+      // show plan details
+      const planDef = PLANS[usage.plan] || PLANS.Free;
+      planDetailsEl.innerHTML = `${planDef.price_month ? '$' + (planDef.price_month) + ' / month' : (planDef.price_one_time ? '$' + planDef.price_one_time + ' one-time' : '')} • Duration: ${planDef.duration || ''}`;
+      // credits display
+      const used = usage.used || 0;
+      const limit = planDef.video_limit;
+      if (limit === null) {
+        planCreditsEl.textContent = `Unlimited videos — used ${used} total.`;
+      } else {
+        planCreditsEl.textContent = `${used} of ${limit} used this billing period.`;
+      }
+      // enable or disable Generate button depending on quota
+      updateGenerateButton(usage);
+      // load library (mock for client)
+      loadVideoLibrary(email);
+    }
+
+    function updateGenerateButton(usage) {
+      const planDef = PLANS[usage.plan] || PLANS.Free;
+      const limit = planDef.video_limit;
+      const used = usage.used || 0;
+      if (limit === null || used < limit) {
+        generateBtn.classList.remove('disabled');
+        generateBtn.disabled = false;
+      } else {
+        generateBtn.classList.add('disabled');
+        generateBtn.disabled = true;
+      }
+    }
+
+    // Prompt Magic (simple client-side improvement)
+    promptMagic.addEventListener('click', () => {
+      const text = promptInput.value.trim();
+      if (!text) { generateStatus.textContent = 'Add a prompt first.'; return; }
+      // small refinement - expand with genre & camera instructions
+      const refined = `${text}. Cinematic lighting, shallow depth of field, 2.39:1 aspect, slow dolly in, color grade: Royal Glow.`;
+      promptInput.value = refined;
+      generateStatus.textContent = 'Prompt Magic applied.';
+      setTimeout(()=> generateStatus.textContent = '', 3000);
+    });
+
+    // Generate video button: calls backend /api/generate-video (if not available, uses mock)
+    generateBtn.addEventListener('click', async () => {
+      generateStatus.textContent = 'Preparing render...';
+      const email = currentUser.email;
+      const usageStr = localStorage.getItem(usageKey(email));
+      const usage = usageStr ? JSON.parse(usageStr) : { plan: 'Free', used: 0 };
+
+      const planDef = PLANS[usage.plan] || PLANS.Free;
+      // enforcement server-side is required in production; we enforce here client-side as well
+      if (planDef.video_limit !== null && usage.used >= planDef.video_limit) {
+        generateStatus.textContent = 'You have reached your plan limit. Upgrade to continue.';
+        return;
+      }
+
+      const prompt = promptInput.value.trim();
+      if (!prompt) { generateStatus.textContent = 'Enter a prompt.'; return; }
+
+      // call backend if configured
+      try {
+        const payload = { prompt, user_email: email };
+        const resp = await fetch((BACKEND_BASE_URL || '') + '/api/generate-video', {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify(payload)
+        });
+        if (!resp.ok) {
+          const text = await resp.text();
+          // fallback to mock
+          generateStatus.textContent = 'Render API not available; generating a mock video...';
+          mockCreateVideo(email, prompt, planDef.duration);
+          return;
+        }
+        const data = await resp.json();
+        // store video in local library
+        storeGeneratedVideo(email, data.video_url, prompt);
+        generateStatus.textContent = 'Render submitted. Video ready:';
+        showVideoResult(data.video_url);
+        // increment usage
+        usage.used = (usage.used || 0) + 1;
+        localStorage.setItem(usageKey(email), JSON.stringify(usage));
+        renderDashboard(usage);
+      } catch (err) {
+        // fallback: create mock
+        generateStatus.textContent = 'Render failed; creating mock video locally...';
+        mockCreateVideo(email, prompt, planDef.duration);
+      }
+    });
+
+    // Mock create video (client-side), used when backend not present
+    function mockCreateVideo(email, prompt, duration) {
+      const videoId = `mock_${Date.now()}`;
+      const url = `https://cdn.kairahstudio.com/mock_videos/${videoId}.mp4`;
+      storeGeneratedVideo(email, url, prompt);
+      showVideoResult(url);
+      // increment usage
+      const usageStr = localStorage.getItem(usageKey(email));
+      let usage = usageStr ? JSON.parse(usageStr) : { plan:'Free', used:0 };
+      usage.used = (usage.used || 0) + 1;
+      localStorage.setItem(usageKey(email), JSON.stringify(usage));
+      renderDashboard(usage);
+    }
+
+    function showVideoResult(url) {
+      videoResult.innerHTML = `<div class="mt-2"><video src="${url}" controls class="w-full rounded-md"></video><p class="text-sm muted mt-2">Download & share from your library below.</p></div>`;
+      // add to library UI
+      const node = document.createElement('div');
+      node.className = 'mt-3';
+    }
+
+    // store in simple local "library"
+    function storeGeneratedVideo(email, url, prompt) {
+      const key = `kairah_videos_${email}`;
+      const list = JSON.parse(localStorage.getItem(key) || '[]');
+      list.unshift({ url, prompt, created: new Date().toISOString() });
+      localStorage.setItem(key, JSON.stringify(list));
+      loadVideoLibrary(email);
+    }
+
+    function loadVideoLibrary(email) {
+      const key = `kairah_videos_${email}`;
+      const list = JSON.parse(localStorage.getItem(key) || '[]');
+      videoLibrary.innerHTML = '';
+      if (!list.length) {
+        videoLibrary.innerHTML = `<div class="text-sm muted">No videos yet. Generate your first cinematic clip.</div>`;
+        return;
+      }
+      list.forEach((v, i) => {
+        const card = document.createElement('div');
+        card.className = 'border rounded p-3';
+        card.innerHTML = `
+          <div class="text-sm font-medium">#${list.length - i} • ${new Date(v.created).toLocaleString()}</div>
+          <video src="${v.url}" controls class="w-full rounded mt-2"></video>
+          <div class="flex gap-2 mt-2">
+            <a href="${v.url}" download class="px-3 py-1 bg-yellow-400 text-black rounded text-sm">Download</a>
+            <button class="px-3 py-1 glass text-sm" onclick="shareVideo('${v.url}')">Share</button>
+          </div>
+        `;
+        videoLibrary.appendChild(card);
+      });
+    }
+
+    function shareVideo(url) {
+      if (navigator.share) {
+        navigator.share({ title: 'Kairah Studio Video', url }).catch(()=>{});
+      } else {
+        prompt('Copy this video URL:', url);
+      }
+    }
+
+    // Payment button handlers (they call backend endpoints)
+    stripeCheckoutBtn.addEventListener('click', async () => {
+      paymentResult.textContent = 'Creating Stripe Checkout...';
+      try {
+        const resp = await fetch((BACKEND_BASE_URL || '') + '/api/create-stripe-session', {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({ plan: 'Pro' }) // example; you can send selected plan
+        });
+        if (!resp.ok) { paymentResult.textContent = 'Stripe session error'; return; }
+        const data = await resp.json();
+        if (data.url) window.location.href = data.url;
+        else if (data.sessionId) {
+          // if server returns sessionId, redirect using stripe.js (requires stripe lib)
+          paymentResult.textContent = 'Stripe session created - redirecting...';
+          // optionally implement stripe redirect
+        }
+      } catch (err) {
+        paymentResult.textContent = 'Stripe error: ' + (err.message || err);
+      }
+    });
+
+    paypalCheckoutBtn.addEventListener('click', () => {
+      // redirect to a backend-created PayPal checkout or open client-side PayPal flow
+      paymentResult.textContent = 'Opening PayPal...';
+      window.open((BACKEND_BASE_URL || '') + '/paypal-checkout?plan=Pro', '_blank');
+    });
+
+    paystackCheckoutBtn.addEventListener('click', () => {
+      paymentResult.textContent = 'Opening Paystack checkout...';
+      // You can implement Paystack inline as earlier in the pricing page, calling backend to create reference
+      window.open((BACKEND_BASE_URL || '') + '/paystack-checkout?plan=Pro', '_blank');
+    });
+
+    mpesaCheckoutBtn.addEventListener('click', async () => {
+      const phone = prompt('Enter phone number (2547XXXXXXXX):');
+      if (!phone) { paymentResult.textContent = 'MPesa number required.'; return; }
+      paymentResult.textContent = 'Initiating STK Push...';
+      try {
+        const resp = await fetch((BACKEND_BASE_URL || '') + '/api/mpesa-stk-init', {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({ phone, amount: 19, plan: 'Pro' })
+        });
+        if (!resp.ok) { paymentResult.textContent = 'MPesa init failed.'; return; }
+        paymentResult.textContent = 'STK Push initiated — check phone.';
+      } catch (err) {
+        paymentResult.textContent = 'MPesa error: ' + (err.message || err);
+      }
+    });
+
+    wiseCopyBtn.addEventListener('click', () => {
+      const details = `Account name: Kairah\nRouting: 020123456\nAccount: 12345678\nReference: Kairah-${Date.now()}`;
+      navigator.clipboard?.writeText(details).then(()=> paymentResult.textContent = 'Wise details copied to clipboard.');
+    });
+
+  </script>
+
+</body>
+</html>
