@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Kairah Studio — Divine Cinematics by AI</title>
+
+  <!-- Fonts + Tailwind -->
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Display:wght@700&family=Poppins:wght@400;500&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <style>
+    body {
+      background: linear-gradient(135deg, #0e0b1b, #1e1632);
+      font-family: 'Poppins', sans-serif;
+    }
+    .card {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 1rem;
+      backdrop-filter: blur(15px);
+      transition: all 0.3s ease;
+    }
+    .card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 0 30px rgba(212, 175, 55, 0.3);
+    }
+    .gold {
+      color: #D4AF37;
+    }
+
+    /* Modal basics */
+    .modal-backdrop { background: rgba(0,0,0,0.6); }
+    .hidden { display: none; }
+  </style>
+</head>
+<body class="text-white min-h-screen flex flex-col items-center justify-start py-12 px-6">
+
+  <h1 class="text-4xl md:text-6xl font-bold mb-4 text-center gold font-[Cinzel_Display]">Kairah Studio Plans</h1>
+  <p class="text-gray-300 mb-8 text-center max-w-2xl">Unlock divine cinematic creation. Choose your path to brilliance.</p>
+
+  <!-- Plans grid (IDENTICAL TEXT & LAYOUT to your last code) -->
+  <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-6 max-w-7xl w-full px-2">
+
+    <!-- Free Plan -->
+    <div class="card p-6 flex flex-col items-center">
+      <h2 class="text-2xl font-semibold mb-2 gold">Free</h2>
+      <p class="text-gray-400 mb-2">₤0 / month</p>
+      <p class="text-sm text-gray-300 mb-4">Duration: 6 seconds</p>
+      <ul class="text-sm text-gray-300 space-y-1 mb-6">
+        <li>🎬 1 short teaser video</li>
+        <li>💡 Perfect for testing</li>
+        <li>🚫 Limited resolution</li>
+      </ul>
+      <button class="subscribe-btn bg-gray-500 text-white px-5 py-2 rounded-lg w-full" data-plan="Free" data-amount="0" data-interval="month" data-yearly="0" data-duration="6s">Included</button>
+    </div>
+
+    <!-- Pro Plan -->
+    <div class="card p-6 flex flex-col items-center">
+      <h2 class="text-2xl font-semibold mb-2 gold">Pro</h2>
+      <p class="text-gray-400 mb-2">$19 / month</p>
+      <p class="text-sm text-gray-300 mb-4">Duration: up to 30 seconds</p>
+      <ul class="text-sm text-gray-300 space-y-1 mb-6">
+        <li>🎬 10 full-quality videos per month</li>
+        <li>⚡ Faster rendering</li>
+        <li>📀 Standard cinematic effects</li>
+        <li>🌍 Yearly Plan: $300</li>
+      </ul>
+      <button class="subscribe-btn bg-[#D4AF37] hover:bg-[#b9962f] text-black font-semibold px-5 py-2 rounded-lg w-full" 
+              data-plan="Pro" data-amount="19" data-yearly="300" data-interval="month" data-duration="30s">
+        Subscribe
+      </button>
+    </div>
+
+    <!-- Diamond Plan -->
+    <div class="card p-6 flex flex-col items-center">
+      <h2 class="text-2xl font-semibold mb-2 gold">Diamond</h2>
+      <p class="text-gray-400 mb-2">$49 / month</p>
+      <p class="text-sm text-gray-300 mb-4">Duration: up to 1 minute</p>
+      <ul class="text-sm text-gray-300 space-y-1 mb-6">
+        <li>🎬 Unlimited HD videos</li>
+        <li>🚀 Priority rendering</li>
+        <li>✨ Premium effects & transitions</li>
+        <li>🌍 Yearly Plan: $450</li>
+      </ul>
+      <button class="subscribe-btn bg-[#D4AF37] hover:bg-[#b9962f] text-black font-semibold px-5 py-2 rounded-lg w-full" 
+              data-plan="Diamond" data-amount="49" data-yearly="450" data-interval="month" data-duration="1m">
+        Subscribe
+      </button>
+    </div>
+
+    <!-- Cinematic Plan -->
+    <div class="card p-6 flex flex-col items-center">
+      <h2 class="text-2xl font-semibold mb-2 gold">Cinematic</h2>
+      <p class="text-gray-400 mb-2">$99 / month</p>
+      <p class="text-sm text-gray-300 mb-4">Duration: 2–3 minutes</p>
+      <ul class="text-sm text-gray-300 space-y-1 mb-6">
+        <li>🎞️ Unlimited ultra-HD videos</li>
+        <li>🪄 Advanced cinematic filters</li>
+        <li>🎧 Sound-enhanced AI voice scenes</li>
+        <li>🌍 Yearly Plan: $600</li>
+      </ul>
+      <button class="subscribe-btn bg-[#D4AF37] hover:bg-[#b9962f] text-black font-semibold px-5 py-2 rounded-lg w-full" 
+              data-plan="Cinematic" data-amount="99" data-yearly="600" data-interval="month" data-duration="2-3m">
+        Subscribe
+      </button>
+    </div>
+
+    <!-- Lifetime Plan -->
+    <div class="card p-6 flex flex-col items-center">
+      <h2 class="text-2xl font-semibold mb-2 gold">Lifetime</h2>
+      <p class="text-gray-400 mb-2">$500 / one-time</p>
+      <p class="text-sm text-gray-300 mb-4">Duration: Unlimited access forever</p>
+      <ul class="text-sm text-gray-300 space-y-1 mb-6">
+        <li>💎 Unlimited cinematic generation</li>
+        <li>🪄 All future features included</li>
+        <li>🚀 Lifetime priority support</li>
+      </ul>
+      <button class="subscribe-btn bg-[#D4AF37] hover:bg-[#b9962f] text-black font-semibold px-5 py-2 rounded-lg w-full" 
+              data-plan="Lifetime" data-amount="500" data-interval="one-time" data-duration="unlimited">
+        Buy Now
+      </button>
+    </div>
+
+  </div>
+
+  <p class="text-gray-400 mt-10 text-center text-sm">© 2025 Kairah Studio — Divine Cinematics by AI</p>
+
+
+  <!-- PAYMENT MODAL (hidden by default) -->
+  <div id="payment-modal" class="fixed inset-0 z-50 hidden items-center justify-center">
+    <div class="modal-backdrop absolute inset-0"></div>
+    <div class="relative max-w-xl w-full mx-4 bg-[#0b0a0f] rounded-xl p-6 z-50 border border-gray-700">
+      <button id="modal-close" class="absolute top-4 right-4 text-gray-300 hover:text-white">✕</button>
+      <h3 id="modal-title" class="text-2xl font-semibold gold mb-2">Pay for Plan</h3>
+      <p id="modal-sub" class="text-gray-300 mb-4">Choose your preferred payment method</p>
+
+      <!-- Payment options -->
+      <div id="payment-options-list" class="space-y-3">
+        <!-- Stripe row -->
+        <div class="flex items-center justify-between">
+          <div class="flex items-center gap-3">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/b/b7/Stripe_Logo%2C_revised_2016.svg" alt="Stripe" class="h-6">
+            <div>
+              <div class="text-sm">Stripe Checkout</div>
+              <div class="text-xs text-gray-400">Card payments (Visa/MasterCard)</div>
+            </div>
+          </div>
+          <button id="stripe-pay" class="bg-[#635BFF] px-4 py-2 rounded-md text-white text-sm">Pay (Stripe)</button>
+        </div>
+
+        <!-- PayPal row -->
+        <div class="flex items-center justify-between">
+          <div class="flex items-center gap-3">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/b/b5/PayPal.svg" alt="PayPal" class="h-6">
+            <div>
+              <div class="text-sm">PayPal</div>
+              <div class="text-xs text-gray-400">Pay with your PayPal account</div>
+            </div>
+          </div>
+          <div id="paypal-button-container"></div>
+        </div>
+
+        <!-- Paystack row -->
+        <div class="flex items-center justify-between">
+          <div class="flex items-center gap-3">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/1/12/Paystack_Logo.png" alt="Paystack" class="h-6">
+            <div>
+              <div class="text-sm">Paystack</div>
+              <div class="text-xs text-gray-400">Card & mobile money (Nigeria, Ghana, etc.)</div>
+            </div>
+          </div>
+          <button id="paystack-pay" class="bg-[#0A0A23] px-4 py-2 rounded-md text-white text-sm">Pay (Paystack)</button>
+        </div>
+
+        <!-- M-Pesa row -->
+        <div class="flex items-center justify-between">
+          <div class="flex items-center gap-3">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/7/7c/M-PESA_LOGO.svg" alt="M-Pesa" class="h-6">
+            <div>
+              <div class="text-sm">M-Pesa (STK Push)</div>
+              <div class="text-xs text-gray-400">Mpesa STK Push to customer's phone (Kenya)</div>
+            </div>
+          </div>
+          <button id="mpesa-pay" class="bg-[#34B233] px-4 py-2 rounded-md text-white text-sm">Pay (M-Pesa)</button>
+        </div>
+
+        <!-- Wise row -->
+        <div class="flex items-center justify-between">
+          <div class="flex items-center gap-3">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/2/2e/Wise_2021.svg" alt="Wise" class="h-6">
+            <div>
+              <div class="text-sm">Wise (Manual)</div>
+              <div class="text-xs text-gray-400">Bank transfer — copy account details</div>
+            </div>
+          </div>
+          <button id="wise-pay" class="bg-[#00B9FF] px-4 py-2 rounded-md text-white text-sm">Copy Details</button>
+        </div>
+
+        <!-- Status / result -->
+        <div id="payment-result" class="mt-4 text-sm text-gray-300"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Paystack and Stripe JS libs, PayPal SDK -->
+  <script src="https://js.paystack.co/v1/inline.js"></script>
+  <script src="https://js.stripe.com/v3/"></script>
+
+  <!-- PayPal: using your provided PAYPAL_CLIENT_ID (sandbox mode by default as you set) -->
+  <script src="https://www.paypal.com/sdk/js?client-id=AVneOw-89uWkpBmQoDjPl...&currency=USD"></script>
+
+  <script>
+    (function () {
+      // Configuration from the environment you provided earlier (inserted here)
+      // Paystack public key (you provided)
+      const PAYSTACK_PUBLIC_KEY = "pk_test_d3297a9a8fe29af2c3f012b77ea38d7df9f00480";
+      // Stripe publishable (you provided)
+      const STRIPE_PUBLISHABLE_KEY = "pk_test_51RoZXfH4iReDKpeMyaPoyRU44hRqCDjQdLdw8Ala5gFdDYeCTSY1TeoxzxkcMxAG3RnOF2AoYTtOvBLOAsDwq56p00WiW0oT3i";
+      // M-Pesa and Wise info (from your provided env)
+      const MPESA_BASE_URL = "https://sandbox.safaricom.co.ke";
+      const MPESA_SHORTCODE = "your_shortcode_here";
+      const MPESA_PASSKEY = "your_generated_passkey";
+      const WISE_ACCOUNT_NAME = "Kairah";
+      const WISE_ROUTING_NUMBER = "020123456";
+      const WISE_ACCOUNT_NUMBER = "12345678";
+      const BACKEND_BASE = ""; // If your backend is on same origin, leave empty. Otherwise set full URL e.g. "https://your-backend.onrender.com"
+
+      // Stripe object (will be used if backend returns sessionId)
+      let stripe = Stripe(STRIPE_PUBLISHABLE_KEY);
+
+      // UI elements
+      const modal = document.getElementById('payment-modal');
+      const modalClose = document.getElementById('modal-close');
+      const modalTitle = document.getElementById('modal-title');
+      const modalSub = document.getElementById('modal-sub');
+      const paymentResult = document.getElementById('payment-result');
+      const paypalContainer = document.getElementById('paypal-button-container');
+
+      // store selected plan details
+      let selectedPlan = null;
+
+      // Attach click handlers to each subscribe button (keeps your markup unchanged)
+      document.querySelectorAll('.subscribe-btn').forEach(btn => {
+        btn.addEventListener('click', async (e) => {
+          const plan = btn.dataset.plan;
+          const amount = Number(btn.dataset.amount) || 0;
+          const yearly = Number(btn.dataset.yearly) || null;
+          const interval = btn.dataset.interval || "month";
+          const duration = btn.dataset.duration || "";
+
+          selectedPlan = { plan, amount, yearly, interval, duration };
+
+          // update modal text but keep original wording exactly
+          modalTitle.textContent = `${plan} — ${interval === 'one-time' ? 'One-Time' : (interval === 'month' ? `$${amount} / month` : `${interval}`)}`;
+          modalSub.textContent = `Plan: ${plan} • Duration: ${duration} • ${yearly ? 'Yearly: $' + yearly : ''}`;
+
+          paymentResult.textContent = '';
+
+          // show PayPal button for this new plan (re-render)
+          renderPayPalButton(amount, plan);
+
+          // show modal
+          modal.classList.remove('hidden');
+          modal.style.display = 'flex';
+          document.body.style.overflow = 'hidden';
+        });
+      });
+
+      modalClose.addEventListener('click', closeModal);
+      function closeModal() {
+        modal.classList.add('hidden');
+        modal.style.display = 'none';
+        document.body.style.overflow = '';
+        // clear PayPal container to remove button instance
+        paypalContainer.innerHTML = '';
+        paymentResult.textContent = '';
+      }
+
+      // Stripe pay handler - calls backend to create a session
+      document.getElementById('stripe-pay').addEventListener('click', async () => {
+        if (!selectedPlan) { paymentResult.textContent = 'Select a plan first.'; return; }
+        paymentResult.textContent = 'Starting Stripe Checkout...';
+        try {
+          const resp = await fetch((BACKEND_BASE || '') + '/api/create-stripe-session', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ plan: selectedPlan.plan, amount: selectedPlan.amount, interval: selectedPlan.interval })
+          });
+          if (!resp.ok) {
+            const text = await resp.text();
+            paymentResult.textContent = 'Stripe session error: ' + text;
+            return;
+          }
+          const data = await resp.json();
+          if (!data.sessionId && !data.url) {
+            paymentResult.textContent = 'Stripe: server did not return session id or url.';
+            return;
+          }
+          // If server returned a redirect URL, go there; otherwise use redirectToCheckout
+          if (data.url) {
+            window.location.href = data.url;
+            return;
+          }
+          await stripe.redirectToCheckout({ sessionId: data.sessionId });
+        } catch (err) {
+          paymentResult.textContent = 'Stripe error: ' + (err && err.message ? err.message : err);
+        }
+      });
+
+      // Paystack pay handler - uses inline with public key you provided
+      document.getElementById('paystack-pay').addEventListener('click', async () => {
+        if (!selectedPlan) { paymentResult.textContent = 'Select a plan first.'; return; }
+        if (!PAYSTACK_PUBLIC_KEY) { paymentResult.textContent = 'Paystack key not configured.'; return; }
+
+        paymentResult.textContent = 'Opening Paystack checkout...';
+        const currency = 'USD'; // adapt if you prefer NGN etc.
+        // Paystack expects amount in kobo for NGN, but for test we multiply by 100 as common practice (adjust for currency)
+        const amountKobo = Math.round((selectedPlan.amount || 0) * 100);
+
+        const handler = PaystackPop.setup({
+          key: PAYSTACK_PUBLIC_KEY,
+          email: localStorage.getItem('userEmail') || 'guest@example.com',
+          amount: amountKobo,
+          currency: currency,
+          ref: 'KAIRAH-' + Math.floor((Math.random() * 1000000000) + 1),
+          onClose: function(){
+            paymentResult.textContent = 'Paystack payment closed by user.';
+          },
+          callback: function(response){
+            paymentResult.textContent = 'Payment success! Reference: ' + response.reference;
+            // Optionally call backend to record payment:
+            fetch((BACKEND_BASE || '') + '/api/paystack-webhook-mock', {
+              method: 'POST', headers: {'Content-Type': 'application/json'},
+              body: JSON.stringify({reference: response.reference, plan: selectedPlan.plan, amount: selectedPlan.amount})
+            }).catch(()=>{});
+          }
+        });
+        handler.openIframe();
+      });
+
+      // M-Pesa handler - calls backend endpoint to trigger STK push
+      document.getElementById('mpesa-pay').addEventListener('click', async () => {
+        if (!selectedPlan) { paymentResult.textContent = 'Select a plan first.'; return; }
+        paymentResult.textContent = 'Requesting M-Pesa STK Push...';
+
+        try {
+          const phone = prompt('Enter customer phone number in international format (e.g. 2547XXXXXXXX):');
+          if (!phone) { paymentResult.textContent = 'Phone number required for M-Pesa.'; return; }
+
+          const resp = await fetch((BACKEND_BASE || '') + '/api/mpesa-stk-init', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ phone, amount: selectedPlan.amount || 0, plan: selectedPlan.plan })
+          });
+          if (!resp.ok) {
+            const text = await resp.text();
+            paymentResult.textContent = 'M-Pesa init failed: ' + text;
+            return;
+          }
+          const data = await resp.json();
+          paymentResult.textContent = 'M-Pesa STK Push initiated. Check phone for prompt.';
+        } catch (err) {
+          paymentResult.textContent = 'M-Pesa error: ' + (err && err.message ? err.message : err);
+        }
+      });
+
+      // Wise copy details
+      document.getElementById('wise-pay').addEventListener('click', () => {
+        const details = `Account name: ${WISE_ACCOUNT_NAME}\nRouting: ${WISE_ROUTING_NUMBER}\nAccount: ${WISE_ACCOUNT_NUMBER}\nReference: KAIRAH-${selectedPlan ? selectedPlan.plan : 'PAY'}`;
+        navigator.clipboard?.writeText(details).then(()=> {
+          paymentResult.textContent = 'Wise details copied to clipboard. Please complete bank transfer manually.';
+        }).catch(()=> {
+          paymentResult.textContent = 'Could not copy — here are the details:\n' + details;
+        });
+      });
+
+      // Render PayPal button using the supplied client-id (sandbox or live depending on your client-id)
+      function renderPayPalButton(amount, plan) {
+        paypalContainer.innerHTML = ''; // clear previous
+        // If amount is 0, render a disabled placeholder
+        if (!amount || Number(amount) === 0) {
+          const btn = document.createElement('div');
+          btn.className = 'px-4 py-2 rounded-md bg-gray-600 text-white text-sm';
+          btn.textContent = 'Free plan / no checkout required';
+          paypalContainer.appendChild(btn);
+          return;
+        }
+
+        // Use paypal Buttons (client-side createOrder)
+        paypal.Buttons({
+          style: { layout: 'vertical', color: 'gold', shape: 'rect', label: 'paypal' },
+          createOrder: function(data, actions) {
+            return actions.order.create({
+              purchase_units: [{
+                amount: {
+                  currency_code: 'USD',
+                  value: String(amount)
+                },
+                description: `${plan} plan purchase at $${amount}`
+              }]
+            });
+          },
+          onApprove: function(data, actions) {
+            return actions.order.capture().then(function(details) {
+              paymentResult.textContent = 'PayPal payment completed: ' + (details.payer.name && details.payer.name.given_name ? details.payer.name.given_name : '');
+              // Optionally notify backend:
+              fetch((BACKEND_BASE || '') + '/api/paypal-capture', {
+                method: 'POST', headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({ orderID: data.orderID, plan, amount })
+              }).catch(()=>{});
+            });
+          },
+          onError: function(err) {
+            paymentResult.textContent = 'PayPal error: ' + (err && err.toString ? err.toString() : err);
+          }
+        }).render('#paypal-button-container');
+      }
+
+      // Click outside modal to close
+      document.getElementById('payment-modal').addEventListener('click', (e) => {
+        if (e.target.classList.contains('modal-backdrop')) closeModal();
+      });
+
+      // Close modal on ESC
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') closeModal();
+      });
+
+      // Initial placeholder: nothing selected
+      paymentResult.textContent = '';
+    })();
+  </script>
+
+</body>
+</html>
