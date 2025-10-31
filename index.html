@@ -112,33 +112,6 @@
   </style>
 </head>
 <body>
-  <!-- SIGN UP / SIGN IN SECTION -->
-<section class="w-full max-w-xl mx-auto mb-10 p-6 bg-[#1e1632] rounded-xl border border-gray-700">
-  <h2 class="text-3xl font-bold mb-4 text-center gold font-[Cinzel_Display]">Welcome to Kairah Studio</h2>
-  
-  <div class="flex flex-col md:flex-row gap-4">
-    <!-- Sign Up Form -->
-    <form id="signup-form" class="flex-1 p-4 bg-[#0b0a1a] rounded-lg border border-gray-600">
-      <h3 class="text-xl font-semibold mb-3 gold">Sign Up</h3>
-      <input type="text" placeholder="Full Name" class="w-full mb-3 px-3 py-2 rounded bg-[#1e1632] border border-gray-500 text-white" required>
-      <input type="email" placeholder="Email" class="w-full mb-3 px-3 py-2 rounded bg-[#1e1632] border border-gray-500 text-white" required>
-      <input type="password" placeholder="Password" class="w-full mb-3 px-3 py-2 rounded bg-[#1e1632] border border-gray-500 text-white" required>
-      <button type="submit" class="w-full bg-[#D4AF37] hover:bg-[#b9962f] text-black font-semibold px-3 py-2 rounded-lg">Sign Up</button>
-    </form>
-
-    <!-- Sign In Form -->
-    <form id="signin-form" class="flex-1 p-4 bg-[#0b0a1a] rounded-lg border border-gray-600">
-      <h3 class="text-xl font-semibold mb-3 gold">Sign In</h3>
-      <input type="email" placeholder="Email" class="w-full mb-3 px-3 py-2 rounded bg-[#1e1632] border border-gray-500 text-white" required>
-      <input type="password" placeholder="Password" class="w-full mb-3 px-3 py-2 rounded bg-[#1e1632] border border-gray-500 text-white" required>
-      <button type="submit" class="w-full bg-[#D4AF37] hover:bg-[#b9962f] text-black font-semibold px-3 py-2 rounded-lg">Sign In</button>
-    </form>
-  </div>
-
-  <p class="text-gray-400 mt-4 text-center text-sm">
-    Or view <a href="pricing.html" class="text-[#D4AF37] underline">full pricing plans</a>
-  </p>
-</section>
 
 
   <!-- Cinematic background and particles -->
@@ -225,6 +198,150 @@
       <button class="glass px-4 py-2 rounded-md text-sm" id="open-support">Support</button>
       <a href="#faq" class="glass px-4 py-2 rounded-md text-sm">FAQ</a>
     </div>
+    <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Kairah Studio — Divine Cinematics by AI</title>
+
+  <!-- Fonts + Tailwind -->
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Display:wght@700&family=Poppins:wght@400;500&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <style>
+    body {
+      background: linear-gradient(135deg, #0e0b1b, #1e1632);
+      font-family: 'Poppins', sans-serif;
+    }
+    .card {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 1rem;
+      backdrop-filter: blur(15px);
+      transition: all 0.3s ease;
+    }
+    .card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 0 30px rgba(212, 175, 55, 0.3);
+    }
+    .gold {
+      color: #D4AF37;
+    }
+
+    /* Modal basics */
+    .modal-backdrop { background: rgba(0,0,0,0.6); }
+    .hidden { display: none; }
+  </style>
+</head>
+<body class="text-white min-h-screen flex flex-col items-center justify-start py-12 px-6">
+
+  <h1 class="text-4xl md:text-6xl font-bold mb-4 text-center gold font-[Cinzel_Display]">Kairah Studio Plans</h1>
+  <p class="text-gray-300 mb-8 text-center max-w-2xl">Unlock divine cinematic creation. Choose your path to brilliance.</p>
+
+  <!-- Plans grid -->
+  <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-6 max-w-7xl w-full px-2">
+
+    <!-- Free Plan -->
+    <div class="card p-6 flex flex-col items-center">
+      <h2 class="text-2xl font-semibold mb-2 gold">Free</h2>
+      <p class="text-gray-400 mb-2">₤0 / month</p>
+      <p class="text-sm text-gray-300 mb-4">Duration: 6 seconds</p>
+      <ul class="text-sm text-gray-300 space-y-1 mb-6">
+        <li>🎬 1 short teaser video</li>
+        <li>💡 Perfect for testing</li>
+        <li>🚫 Limited resolution</li>
+      </ul>
+      <button class="subscribe-btn bg-gray-500 text-white px-5 py-2 rounded-lg w-full" data-plan="Free" data-amount="0" data-interval="month" data-yearly="0" data-duration="6s">Included</button>
+    </div>
+
+    <!-- Pro Plan -->
+    <div class="card p-6 flex flex-col items-center">
+      <h2 class="text-2xl font-semibold mb-2 gold">Pro</h2>
+      <p class="text-gray-400 mb-2">$19 / month</p>
+      <p class="text-sm text-gray-300 mb-4">Duration: up to 30 seconds</p>
+      <ul class="text-sm text-gray-300 space-y-1 mb-6">
+        <li>🎬 10 full-quality videos per month</li>
+        <li>⚡ Faster rendering</li>
+        <li>📀 Standard cinematic effects</li>
+        <li>🌍 Yearly Plan: $300</li>
+      </ul>
+      <button class="subscribe-btn bg-[#D4AF37] hover:bg-[#b9962f] text-black font-semibold px-5 py-2 rounded-lg w-full" 
+              data-plan="Pro" data-amount="19" data-yearly="300" data-interval="month" data-duration="30s">
+        Subscribe
+      </button>
+    </div>
+
+    <!-- Diamond Plan -->
+    <div class="card p-6 flex flex-col items-center">
+      <h2 class="text-2xl font-semibold mb-2 gold">Diamond</h2>
+      <p class="text-gray-400 mb-2">$49 / month</p>
+      <p class="text-sm text-gray-300 mb-4">Duration: up to 1 minute</p>
+      <ul class="text-sm text-gray-300 space-y-1 mb-6">
+        <li>🎬 Unlimited HD videos</li>
+        <li>🚀 Priority rendering</li>
+        <li>✨ Premium effects & transitions</li>
+        <li>🌍 Yearly Plan: $450</li>
+      </ul>
+      <button class="subscribe-btn bg-[#D4AF37] hover:bg-[#b9962f] text-black font-semibold px-5 py-2 rounded-lg w-full" 
+              data-plan="Diamond" data-amount="49" data-yearly="450" data-interval="month" data-duration="1m">
+        Subscribe
+      </button>
+    </div>
+
+    <!-- Cinematic Plan -->
+    <div class="card p-6 flex flex-col items-center">
+      <h2 class="text-2xl font-semibold mb-2 gold">Cinematic</h2>
+      <p class="text-gray-400 mb-2">$99 / month</p>
+      <p class="text-sm text-gray-300 mb-4">Duration: 2–3 minutes</p>
+      <ul class="text-sm text-gray-300 space-y-1 mb-6">
+        <li>🎞️ Unlimited ultra-HD videos</li>
+        <li>🪄 Advanced cinematic filters</li>
+        <li>🎧 Sound-enhanced AI voice scenes</li>
+        <li>🌍 Yearly Plan: $600</li>
+      </ul>
+      <button class="subscribe-btn bg-[#D4AF37] hover:bg-[#b9962f] text-black font-semibold px-5 py-2 rounded-lg w-full" 
+              data-plan="Cinematic" data-amount="99" data-yearly="600" data-interval="month" data-duration="2-3m">
+        Subscribe
+      </button>
+    </div>
+
+    <!-- Lifetime Plan -->
+    <div class="card p-6 flex flex-col items-center">
+      <h2 class="text-2xl font-semibold mb-2 gold">Lifetime</h2>
+      <p class="text-gray-400 mb-2">$500 / one-time</p>
+      <p class="text-sm text-gray-300 mb-4">Duration: Unlimited access forever</p>
+      <ul class="text-sm text-gray-300 space-y-1 mb-6">
+        <li>💎 Unlimited cinematic generation</li>
+        <li>🪄 All future features included</li>
+        <li>🚀 Lifetime priority support</li>
+      </ul>
+      <button class="subscribe-btn bg-[#D4AF37] hover:bg-[#b9962f] text-black font-semibold px-5 py-2 rounded-lg w-full" 
+              data-plan="Lifetime" data-amount="500" data-interval="one-time" data-duration="unlimited">
+        Buy Now
+      </button>
+    </div>
+
+  </div>
+
+  <p class="text-gray-400 mt-10 text-center text-sm">© 2025 Kairah Studio — Divine Cinematics by AI</p>
+
+  <!-- Modal placeholder for payments -->
+  <div id="payment-modal" class="fixed inset-0 z-50 hidden items-center justify-center">
+    <div class="modal-backdrop absolute inset-0"></div>
+    <div class="relative max-w-xl w-full mx-4 bg-[#0b0a0f] rounded-xl p-6 z-50 border border-gray-700">
+      <button id="modal-close" class="absolute top-4 right-4 text-gray-300 hover:text-white">✕</button>
+      <h3 id="modal-title" class="text-2xl font-semibold gold mb-2">Pay for Plan</h3>
+      <p id="modal-sub" class="text-gray-300 mb-4">Choose your preferred payment method</p>
+      <div id="payment-options-list" class="space-y-3">
+        <!-- Stripe, PayPal, Paystack, M-Pesa, Wise buttons will be here -->
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>
+
 
     <!-- FAQs (inline accordions) -->
     <section id="faq" class="glass p-6 mb-8">
