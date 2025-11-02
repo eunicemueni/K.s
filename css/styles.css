@@ -1,0 +1,64 @@
+/* File: css/styles.css */
+
+/* Reset and basic styles */
+body, html {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #3D2C41; /* Midnight Plum */
+  color: #D4AF37; /* Kairah Gold */
+  padding: 1rem 2rem;
+}
+
+.header .top-nav a {
+  color: #D4AF37;
+  margin-left: 1rem;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.header .top-nav a:hover {
+  text-decoration: underline;
+}
+
+.container {
+  display: flex;
+}
+
+.sidebar {
+  width: 200px;
+  background-color: #E7D2CB; /* Soft Blush */
+  padding: 1rem;
+}
+
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+}
+
+.sidebar ul li a {
+  display: block;
+  padding: 0.5rem 0;
+  text-decoration: none;
+  color: #3D2C41;
+  font-weight: bold;
+}
+
+.sidebar ul li a:hover {
+  color: #D4AF37;
+}
+
+.main-content {
+  flex: 1;
+  padding: 2rem;
+}
+
+section {
+  margin-bottom: 3rem;
+}
