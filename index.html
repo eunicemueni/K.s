@@ -5,14 +5,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Kairah Studio</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body {
+      background-color: #3D2C41; /* Midnight Plum */
+    }
+  </style>
 </head>
-<body class="bg-black text-white h-screen flex">
+<body class="text-white h-screen flex">
 
   <!-- Sidebar -->
   <aside class="w-64 bg-gray-900 flex flex-col p-6 space-y-4">
-    <!-- Studio Title -->
-    <h1 class="text-3xl font-bold mb-6">KAIRAH STUDIO</h1>
-
     <!-- Navigation Links -->
     <nav class="flex flex-col space-y-2">
 
@@ -72,9 +74,15 @@
   </aside>
 
   <!-- Main Content Area -->
-  <main class="flex-1 p-6 overflow-auto">
-    <h2 class="text-2xl font-bold mb-4">Welcome to Kairah Studio</h2>
-    <p>Select an option from the left to view details.</p>
+  <main class="flex-1 p-6 overflow-auto flex flex-col items-center">
+    <!-- Centered Title -->
+    <h1 class="text-5xl font-bold mb-10 text-center">KAIRAH STUDIO</h1>
+
+    <!-- Dashboard Content -->
+    <div class="w-full max-w-4xl">
+      <h2 class="text-2xl font-bold mb-4">Welcome to the Dashboard</h2>
+      <p>Overview of user stats, video history, credits, and quick actions.</p>
+    </div>
   </main>
 
   <!-- Footer -->
