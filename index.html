@@ -1,73 +1,100 @@
-<!-- File: index.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Kairah Studio</title>
-  <link rel="stylesheet" href="css/styles.css">
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-  <!-- Header -->
-  <header class="header">
-    <div class="logo">Kairah Studio</div>
-    <nav class="top-nav">
-      <a href="#dashboard">Dashboard</a>
-      <a href="#pricing">Pricing</a>
-      <a href="#affiliates">Affiliates</a>
-      <a href="#faq">FAQ</a>
-      <a href="#settings">Settings</a>
-      <a href="#support">Support</a>
+<body class="bg-black text-white h-screen flex">
+
+  <!-- Sidebar -->
+  <aside class="w-64 bg-gray-900 flex flex-col p-6 space-y-4">
+    <!-- Studio Title -->
+    <h1 class="text-3xl font-bold mb-6">KAIRAH STUDIO</h1>
+
+    <!-- Navigation Links -->
+    <nav class="flex flex-col space-y-2">
+
+      <!-- Dashboard -->
+      <a href="#" class="flex items-center space-x-2 hover:bg-gray-700 p-2 rounded bg-gray-800">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h18v18H3V3z"/>
+        </svg>
+        <span>Dashboard</span>
+      </a>
+
+      <!-- Pricing -->
+      <a href="#" class="flex items-center space-x-2 hover:bg-gray-700 p-2 rounded">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c1.333 0 2.667.667 3.333 2-1.333.667-2.667 1.333-3.333 2-1.333-.667-2.667-1.333-3.333-2C9.333 8.667 10.667 8 12 8z"/>
+        </svg>
+        <span>Pricing / Plans</span>
+      </a>
+
+      <!-- Video Creation -->
+      <a href="#" class="flex items-center space-x-2 hover:bg-gray-700 p-2 rounded">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M4 6h12v12H4V6z"/>
+        </svg>
+        <span>Video Creation</span>
+      </a>
+
+      <!-- Prompts Library (Collapsible) -->
+      <div class="flex flex-col">
+        <button id="prompts-btn" class="flex items-center justify-between w-full p-2 hover:bg-gray-700 rounded font-semibold">
+          <span class="flex items-center space-x-2">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+            </svg>
+            <span>Prompts Library</span>
+          </span>
+          <span id="prompts-icon">+</span>
+        </button>
+        <div id="prompts-submenu" class="ml-6 mt-1 hidden flex-col space-y-1">
+          <a href="#" class="hover:bg-gray-700 p-1 rounded">Viral</a>
+          <a href="#" class="hover:bg-gray-700 p-1 rounded">Fantasy</a>
+          <a href="#" class="hover:bg-gray-700 p-1 rounded">Royal</a>
+          <a href="#" class="hover:bg-gray-700 p-1 rounded">Funny / Trending</a>
+        </div>
+      </div>
+
+      <!-- Other Links -->
+      <a href="#" class="flex items-center space-x-2 hover:bg-gray-700 p-2 rounded">Affiliates</a>
+      <a href="#" class="flex items-center space-x-2 hover:bg-gray-700 p-2 rounded">FAQ</a>
+      <a href="#" class="flex items-center space-x-2 hover:bg-gray-700 p-2 rounded">Support / Contact</a>
+      <a href="#" class="flex items-center space-x-2 hover:bg-gray-700 p-2 rounded">Settings / Profile</a>
+      <a href="#" class="flex items-center space-x-2 hover:bg-gray-700 p-2 rounded">Terms & Policies</a>
+      <a href="#" class="flex items-center space-x-2 hover:bg-gray-700 p-2 rounded">Notifications</a>
+      <a href="#" class="flex items-center space-x-2 hover:bg-gray-700 p-2 rounded">Activity / History</a>
+
     </nav>
-  </header>
+  </aside>
 
-  <div class="container">
-    <!-- Sidebar (optional left vertical menu) -->
-    <aside class="sidebar">
-      <ul>
-        <li><a href="#dashboard">Dashboard</a></li>
-        <li><a href="#pricing">Pricing</a></li>
-        <li><a href="#affiliates">Affiliates</a></li>
-        <li><a href="#faq">FAQ</a></li>
-        <li><a href="#settings">Settings</a></li>
-        <li><a href="#support">Support</a></li>
-      </ul>
-    </aside>
+  <!-- Main Content Area -->
+  <main class="flex-1 p-6 overflow-auto">
+    <h2 class="text-2xl font-bold mb-4">Welcome to Kairah Studio</h2>
+    <p>Select an option from the left to view details.</p>
+  </main>
 
-    <!-- Main content area -->
-    <main class="main-content">
-      <section id="dashboard">
-        <h1>Dashboard</h1>
-        <p>Welcome to Kairah Studio. This is your central hub.</p>
-      </section>
+  <!-- Footer -->
+  <footer class="absolute bottom-0 w-full bg-gray-800 p-4 text-sm text-gray-300 flex justify-center space-x-4">
+    <a href="#" class="hover:underline">Terms of Service</a>
+    <a href="#" class="hover:underline">Privacy Policy</a>
+    <a href="#" class="hover:underline">Contact</a>
+    <a href="#" class="hover:underline">Social</a>
+  </footer>
 
-      <section id="pricing">
-        <h1>Pricing</h1>
-        <p>Details about Free, Pro, Diamond, Cinematic, Lifetime plans.</p>
-      </section>
+  <!-- Script for Prompts Collapsible -->
+  <script>
+    const btn = document.getElementById('prompts-btn');
+    const submenu = document.getElementById('prompts-submenu');
+    const icon = document.getElementById('prompts-icon');
+    btn.addEventListener('click', () => {
+      submenu.classList.toggle('hidden');
+      icon.textContent = submenu.classList.contains('hidden') ? '+' : '-';
+    });
+  </script>
 
-      <section id="affiliates">
-        <h1>Affiliates</h1>
-        <p>Affiliate program info will appear here.</p>
-      </section>
-
-      <section id="faq">
-        <h1>FAQ</h1>
-        <p>Frequently asked questions.</p>
-      </section>
-
-      <section id="settings">
-        <h1>Settings</h1>
-        <p>Account and app settings.</p>
-      </section>
-
-      <section id="support">
-        <h1>Support</h1>
-        <p>Contact support and help resources.</p>
-      </section>
-    </main>
-  </div>
-
-  <script src="js/scripts.js"></script>
 </body>
 </html>
