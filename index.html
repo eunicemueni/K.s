@@ -6,103 +6,105 @@
   <title>Kairah Studio</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
+    /* Colors */
+    :root {
+      --kairah-gold: #D4AF37;
+      --midnight-plum: #3D2C41;
+      --lux-black: #0D0D0D; /* shiny/deep black for main body */
+    }
     body {
-      background-color: #3D2C41; /* Midnight Plum */
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+    }
+    .header {
+      background-color: var(--midnight-plum);
+      color: var(--kairah-gold);
+      text-align: center;
+      padding: 2rem 1rem;
+      font-size: 4rem;
+      font-weight: bold;
+      letter-spacing: 2px;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      border-bottom: 3px solid var(--kairah-gold); /* separation line */
+    }
+    .sidebar {
+      background-color: var(--midnight-plum);
+      width: 20rem;
+      min-width: 16rem;
+      height: calc(100vh - 9rem); /* minus header height */
+      padding: 2rem 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    .main-body {
+      background-color: var(--lux-black);
+      flex: 1;
+      padding: 2rem;
+      min-height: calc(100vh - 9rem);
+      color: white;
+    }
+    a {
+      text-decoration: none;
+      color: white;
+      padding: 0.5rem 1rem;
+      border-radius: 0.375rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    a:hover {
+      background-color: #4b2c61; /* subtle hover on Midnight Plum */
+    }
+    footer {
+      background-color: #1A1A1A;
+      padding: 1rem;
+      text-align: center;
+      color: #ccc;
+      font-size: 0.875rem;
     }
   </style>
 </head>
-<body class="text-white h-screen flex">
+<body class="flex flex-col">
 
-  <!-- Sidebar -->
-  <aside class="w-64 bg-gray-900 flex flex-col p-6 space-y-4">
-    <!-- Navigation Links -->
-    <nav class="flex flex-col space-y-2">
+  <!-- Header -->
+  <header class="header">KAIRAH STUDIO</header>
 
-      <!-- Dashboard -->
-      <a href="#" class="flex items-center space-x-2 hover:bg-gray-700 p-2 rounded bg-gray-800">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h18v18H3V3z"/>
-        </svg>
-        <span>Dashboard</span>
-      </a>
+  <div class="flex flex-1">
 
-      <!-- Pricing -->
-      <a href="#" class="flex items-center space-x-2 hover:bg-gray-700 p-2 rounded">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c1.333 0 2.667.667 3.333 2-1.333.667-2.667 1.333-3.333 2-1.333-.667-2.667-1.333-3.333-2C9.333 8.667 10.667 8 12 8z"/>
-        </svg>
-        <span>Pricing / Plans</span>
-      </a>
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <a href="#">Dashboard</a>
+      <a href="#">Pricing / Plans</a>
+      <a href="#">Video Creation</a>
+      <a href="#">Prompts Library</a>
+      <a href="#">Affiliates</a>
+      <a href="#">FAQ</a>
+      <a href="#">Support / Contact</a>
+      <a href="#">Settings / Profile</a>
+      <a href="#">Terms & Policies</a>
+      <a href="#">Notifications</a>
+      <a href="#">Activity / History</a>
+    </aside>
 
-      <!-- Video Creation -->
-      <a href="#" class="flex items-center space-x-2 hover:bg-gray-700 p-2 rounded">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M4 6h12v12H4V6z"/>
-        </svg>
-        <span>Video Creation</span>
-      </a>
-
-      <!-- Prompts Library (Collapsible) -->
-      <div class="flex flex-col">
-        <button id="prompts-btn" class="flex items-center justify-between w-full p-2 hover:bg-gray-700 rounded font-semibold">
-          <span class="flex items-center space-x-2">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
-            </svg>
-            <span>Prompts Library</span>
-          </span>
-          <span id="prompts-icon">+</span>
-        </button>
-        <div id="prompts-submenu" class="ml-6 mt-1 hidden flex-col space-y-1">
-          <a href="#" class="hover:bg-gray-700 p-1 rounded">Viral</a>
-          <a href="#" class="hover:bg-gray-700 p-1 rounded">Fantasy</a>
-          <a href="#" class="hover:bg-gray-700 p-1 rounded">Royal</a>
-          <a href="#" class="hover:bg-gray-700 p-1 rounded">Funny / Trending</a>
-        </div>
-      </div>
-
-      <!-- Other Links -->
-      <a href="#" class="flex items-center space-x-2 hover:bg-gray-700 p-2 rounded">Affiliates</a>
-      <a href="#" class="flex items-center space-x-2 hover:bg-gray-700 p-2 rounded">FAQ</a>
-      <a href="#" class="flex items-center space-x-2 hover:bg-gray-700 p-2 rounded">Support / Contact</a>
-      <a href="#" class="flex items-center space-x-2 hover:bg-gray-700 p-2 rounded">Settings / Profile</a>
-      <a href="#" class="flex items-center space-x-2 hover:bg-gray-700 p-2 rounded">Terms & Policies</a>
-      <a href="#" class="flex items-center space-x-2 hover:bg-gray-700 p-2 rounded">Notifications</a>
-      <a href="#" class="flex items-center space-x-2 hover:bg-gray-700 p-2 rounded">Activity / History</a>
-
-    </nav>
-  </aside>
-
-  <!-- Main Content Area -->
-  <main class="flex-1 p-6 overflow-auto flex flex-col items-center">
-    <!-- Centered Title -->
-    <h1 class="text-5xl font-bold mb-10 text-center">KAIRAH STUDIO</h1>
-
-    <!-- Dashboard Content -->
-    <div class="w-full max-w-4xl">
-      <h2 class="text-2xl font-bold mb-4">Welcome to the Dashboard</h2>
+    <!-- Main Body -->
+    <main class="main-body">
+      <h2 class="text-3xl font-bold mb-4">Dashboard</h2>
       <p>Overview of user stats, video history, credits, and quick actions.</p>
-    </div>
-  </main>
+      <!-- Other main content here -->
+    </main>
+
+  </div>
 
   <!-- Footer -->
-  <footer class="absolute bottom-0 w-full bg-gray-800 p-4 text-sm text-gray-300 flex justify-center space-x-4">
-    <a href="#" class="hover:underline">Terms of Service</a>
-    <a href="#" class="hover:underline">Privacy Policy</a>
-    <a href="#" class="hover:underline">Contact</a>
-    <a href="#" class="hover:underline">Social</a>
+  <footer>
+    <a href="#">Terms of Service</a> | 
+    <a href="#">Privacy Policy</a> | 
+    <a href="#">Contact</a> | 
+    <a href="#">Social</a>
   </footer>
-
-  <!-- Script for Prompts Collapsible -->
-  <script>
-    const btn = document.getElementById('prompts-btn');
-    const submenu = document.getElementById('prompts-submenu');
-    const icon = document.getElementById('prompts-icon');
-    btn.addEventListener('click', () => {
-      submenu.classList.toggle('hidden');
-      icon.textContent = submenu.classList.contains('hidden') ? '+' : '-';
-    });
-  </script>
 
 </body>
 </html>
